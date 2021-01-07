@@ -1,15 +1,23 @@
 <template>
     <div>
-        <button class="btn btn-primary" @click="criarNovoJogo">Novo Jogo</button>
-        <placar-modal :timeCasa="timeCasa" :timeFora="timeFora" ref="modalPlacar"></placar-modal>
+        <button class="btn btn-primary" @click="criarNovoJogo" :disabled="loading">Novo Jogo</button>
+        <placar-modal-mat :timeCasa="timeCasa" :timeFora="timeFora" ref="modalPlacar"></placar-modal-mat>
     </div>
 </template>
 
 <script>
+import getTimes from '../get-times';
 export default {
+    created() {
+        getTimes.then(times => this.times = times,
+        err => console.log("Aconteceu um erro", err))
+        .finally(() => this.loading = false);
+    },
     data() {
         return {
-            times: this.timesColecao,
+            //times: this.timesColecao
+            loading : true,
+            times: [],
             timeCasa: null,
             timeFora: null
         }

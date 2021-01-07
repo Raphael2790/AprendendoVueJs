@@ -1,45 +1,64 @@
 <template>
     <div>
-        <input type="text" class="form-control" v-model="busca">
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th v-for="(coluna, indice) in ordem.colunas" v-bind:key="coluna">
-                        <a href="#" @click.prevent="ordenar(indice)">{{coluna | ucWords}}</a>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Propriedade class e style tornou reativa, para podermos usar uma função interna -->
-                <tr v-for="(time, indice) in timesFiltrados" v-bind:key="time+indice+'x'" :class="{'table-success': indice<6}" :style="{'font-size': indice<6 ? '16px' : '14px', 'background-color': indice>=16 ? '#ff6b5c': ''}">
-                    <td>
-                    <clube :time="time"></clube>
-                    </td>
-                    <td>{{time.pontos}}</td>
-                    <td>{{time.gm}}</td>
-                    <td>{{time.gs}}</td>
-                    <!-- <td>{{time | saldo}}</td> -->
-                    <td>{{time.saldo}}</td>
-                </tr>
-            </tbody>
-        </table>
-        <clubes-libertadores :times="timesOrdenados"></clubes-libertadores>
-        <clubes-rebaixados :times="timesOrdenados"></clubes-rebaixados>
+        <div v-if="loading">
+            <img :src="loadGif" alt="Loading Image" width="200px" height="200px">
+        </div>
+        <div v-else>
+            <input type="text" class="form-control" v-model="busca">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Nome</th>
+                        <th v-for="(coluna, indice) in ordem.colunas" v-bind:key="coluna">
+                            <a href="#" @click.prevent="ordenar(indice)">{{coluna | ucWords}}</a>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <!-- Propriedade class e style tornou reativa, para podermos usar uma função interna -->
+                    <tr v-for="(time, indice) in timesFiltrados" v-bind:key="time+indice+'x'" :class="{'table-success': indice<6}" :style="{'font-size': indice<6 ? '16px' : '14px', 'background-color': indice>=16 ? '#ff6b5c': ''}">
+                        <td>
+                        <clube :time="time"></clube>
+                        </td>
+                        <td>{{time.pontos}}</td>
+                        <td>{{time.gm}}</td>
+                        <td>{{time.gs}}</td>
+                        <!-- <td>{{time | saldo}}</td> -->
+                        <td>{{time.saldo}}</td>
+                    </tr>
+                </tbody>
+            </table>
+            <clubes-libertadores :times="timesOrdenados"></clubes-libertadores>
+            <clubes-rebaixados :times="timesOrdenados"></clubes-rebaixados>
+            <total/>
+        </div>
     </div>
 </template>
 
 <script>
 import _ from 'lodash';
+import loadGif from '../assets/loading.gif'
+import getTimes from '../get-times'
 export default {
+    //Neste caso o created está sendo utilizado para abastecer o estado do componente
+    created() {
+        getTimes
+            .then(times => this.times = times,
+            err => console.log("Aconteceu um erro", err))
+            //O bloco finally é executado independente do resultado da promessa
+            .finally(() => this.loading = false)
+    },
     data() {
         return {
+            loadGif,
+            loading: true,
             busca: '',
             ordem: {
                 colunas: ['pontos', 'gm', 'gs', 'saldo'],
                 ordenacao : ['desc', 'desc', 'asc', 'desc']
             },
-            times: this.timesColecao
+            //times: this.timesColecao
+            times: []
         }
     },
     inject: ['timesColecao'],
@@ -54,6 +73,12 @@ export default {
         timesOrdenados() {
             return _.orderBy(this.times, this.ordem.colunas, this.ordem.ordenacao)
         }
+    },
+    beforeUpdate() {
+        console.log(Object.assign({},this), "beforeUpdate");
+    },
+    updated() {
+        console.log(Object.assign({}, this), "updated");
     },
     methods: {
         ordenar(indice) {
