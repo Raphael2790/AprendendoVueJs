@@ -11,7 +11,7 @@
         <div class="row">
             <div class="col-md-12" v-show="visao == 'tabela'">
                 <tabela-clubes></tabela-clubes>
-                <total-gols/>
+                <total/>
             </div>
         </div>
     </div>
