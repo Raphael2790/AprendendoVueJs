@@ -1,7 +1,8 @@
 <template>
     <div>
         <button class="btn btn-primary" @click="criarNovoJogo" :disabled="loading">Novo Jogo</button>
-        <placar-modal-mat :timeCasa="timeCasa" :timeFora="timeFora" ref="modalPlacar"></placar-modal-mat>
+        <placar-modal-mat :timeCasa="timeCasa" :timeFora="timeFora" ref="modalPlacar" @fim-jogo="mostrarPlacarFinal($event)"></placar-modal-mat>
+        <placar-modal-final-mat :timeCasa="timeCasa" :timeFora="timeFora" :placar="placarFinal" ref="modalPlacarFinal"></placar-modal-final-mat>
     </div>
 </template>
 
@@ -19,12 +20,12 @@ export default {
             loading : true,
             times: [],
             timeCasa: null,
-            timeFora: null
+            timeFora: null,
+            placarFinal: {}
         }
     },
     //inject - recebe informações ou metodos de elementos pai do mesmo, mas é imutável (não podemos manipular diretamente)
     //Para fazer a manipulação dos dados devemos atribuir os dados a um dado do próprio componente
-    inject: ['timesColecao'],
     methods: {
         criarNovoJogo() {
             let indiceCasa = Math.floor(Math.random() * 20);
@@ -36,6 +37,12 @@ export default {
             var modal = this.$refs.modalPlacar;
             modal.mostrarModal();
             //this.$emit('novo-jogo', {visao: 'placar', timeCasa : this.timeCasa, timeFora: this.timeFora});
+        },
+        mostrarPlacarFinal({golsMarcados, golsSofridos}){
+            this.placarFinal = {golsMarcados, golsSofridos};
+            var modalPlacar = this.$refs.modalPlacarFinal;
+            console.log(this.placarFinal)
+            modalPlacar.mostrarModal();
         }
     }
 }

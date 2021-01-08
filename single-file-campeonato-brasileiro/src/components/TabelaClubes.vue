@@ -1,8 +1,6 @@
 <template>
-    <div>
-        <div v-if="loading">
-            <img :src="loadGif" alt="Loading Image" width="200px" height="200px">
-        </div>
+    <div class="container">
+        <loading v-if="loading"/>
         <div v-else>
             <input type="text" class="form-control" v-model="busca">
             <table class="table table-striped">
@@ -37,7 +35,6 @@
 
 <script>
 import _ from 'lodash';
-import loadGif from '../assets/loading.gif'
 import getTimes from '../get-times'
 export default {
     //Neste caso o created está sendo utilizado para abastecer o estado do componente
@@ -50,7 +47,6 @@ export default {
     },
     data() {
         return {
-            loadGif,
             loading: true,
             busca: '',
             ordem: {

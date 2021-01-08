@@ -8,10 +8,12 @@ import Modal from './components/Modal.vue';
 import ModalPlacar from './components/ModalPlacar.vue';
 import ModalMat from './components/ModalMat.vue';
 import ModalPlacarMat from './components/ModalPlacarMat.vue';
+import ModalPlacarFinalMat from './components/ModalPlacarFinalMat.vue';
 import Clube from './components/Clube.vue';
 import ClubesRebaixados from './components/ClubesRebaixados.vue';
 import ClubesLibertadores from './components/ClubesLibertadores.vue';
 import Total from './components/Total.vue';
+import Loading from './components/Loading.vue';
 import Time from './time';
 import $ from 'jquery';
 
@@ -39,10 +41,12 @@ Vue.component('modal', Modal);
 Vue.component('placar-modal', ModalPlacar);
 Vue.component('modal-mat', ModalMat);
 Vue.component('placar-modal-mat', ModalPlacarMat);
+Vue.component('placar-modal-final-mat', ModalPlacarFinalMat);
 Vue.component('clube', Clube);
 Vue.component('clubes-rebaixados', ClubesRebaixados);
 Vue.component('clubes-libertadores', ClubesLibertadores);
 Vue.component('total', Total);
+Vue.component('loading', Loading);
 
 new Vue({
   render: h => h(App),

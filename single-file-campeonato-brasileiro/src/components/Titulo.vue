@@ -30,7 +30,7 @@ export default {
     mounted() {
         console.log(Object.assign({}, this), "mounted");
     },
-    //Usado para executar ações antes de destruir um componente
+    //Usado para executar ações antes de destruir um componente, inforamações sensiveis
     beforeDestroy() {
         console.log(Object.assign({}, this), "beforeDestroy");
     },
