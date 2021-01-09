@@ -28,7 +28,7 @@
             </table>
             <clubes-libertadores :times="timesOrdenados"></clubes-libertadores>
             <clubes-rebaixados :times="timesOrdenados"></clubes-rebaixados>
-            <total/>
+            <total :times="times"/>
         </div>
     </div>
 </template>
@@ -57,7 +57,7 @@ export default {
             times: []
         }
     },
-    inject: ['timesColecao'],
+    // inject: ['timesColecao'],
     computed: {
         timesFiltrados() {
             var self = this;
@@ -78,7 +78,7 @@ export default {
     },
     methods: {
         ordenar(indice) {
-            // o vue não consegue observar mudanças em profundidade dos objetos e arrays de seus dados 
+            // o vue não consegue observar mudanças em profundidade dos objetos e arrays de seus dados
             this.$set(this.ordem.ordenacao, indice, this.ordem.ordenacao[indice]== 'desc'? 'asc': 'desc')
         }
     }

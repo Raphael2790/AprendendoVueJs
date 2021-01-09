@@ -2,11 +2,11 @@
     <modal-mat ref="modalPlacar">
         <h5 slot="header" class="modal-title">Fim de jogo</h5>
         <div>
-            <span></span>
+            <span>{{placar.golsMarcados}}</span>
             <clube :time="timeCasa" invertido="true" v-if="timeCasa"></clube>
             <span>X</span>
             <clube :time="timeFora" v-if="timeFora"></clube>
-            <span></span>
+            <span>{{placar.golsSofridos}}</span>
         </div>
         <div slot="footer">
             <button type="button" class="btn btn-secondary" @click.prevent="esconderModal">Fechar</button>

@@ -4,12 +4,12 @@
 
 <script>
 export default {
-    inject: ['timesColecao'],
+    props:['times'],
     //Propriedades dentro de computed vão ser reprocessadas caso algum elemento enterno sofra modificação
     computed: {
         totalDeGolsMarcados() {
             let totalGols = 0;
-            this.timesColecao.map(time => {
+            this.times.map(time => {
                 totalGols += time.gm
             })
             return totalGols;

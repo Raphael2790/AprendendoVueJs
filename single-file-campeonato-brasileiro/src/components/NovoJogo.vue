@@ -41,7 +41,6 @@ export default {
         mostrarPlacarFinal({golsMarcados, golsSofridos}){
             this.placarFinal = {golsMarcados, golsSofridos};
             var modalPlacar = this.$refs.modalPlacarFinal;
-            console.log(this.placarFinal)
             modalPlacar.mostrarModal();
         }
     }
